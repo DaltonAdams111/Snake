@@ -3,14 +3,15 @@ from constants import *
 
 class Player:
 	def __init__(self, x_positon, y_position, width, height):
-		self.position = pygame.Vector2(x=x_positon, y=y_position)
 		self.width = width
 		self.height = height
 		self.head = pygame.Rect(x_positon, y_position, width, height)
-		self.body = [self.head]
+		self.body = []
 		self.direction = None
 		self.new_direction = None
-		self.move_cooldown = PLAYER_MOVE_SPEED
+		self.move_speed = 0.2
+		self.move_cooldown = self.move_speed
+		self.score = 0
 
 	def update(self, delta_time):
 		self.move_cooldown -= delta_time
@@ -42,7 +43,16 @@ class Player:
 			return
 		
 		self.head.move_ip(DIRECTIONS[self.direction])
-		self.move_cooldown = PLAYER_MOVE_SPEED
+		if len(self.body) > 0:
+			self.body.insert(0, pygame.Rect(self.head.left - DIRECTIONS[self.direction][0], self.head.top - DIRECTIONS[self.direction][1], self.head.width, self.head.height))
+			self.body.pop()
+
+		self.move_cooldown = self.move_speed
 
 	def draw(self, surface):
 		pygame.draw.rect(surface, "green", self.head)
+		for segment in self.body:
+			pygame.draw.rect(surface, "gray", segment)
+
+	def grow(self):
+		self.body.append(pygame.Rect(self.head.left - DIRECTIONS[self.direction][0], self.head.top - DIRECTIONS[self.direction][1], self.head.width, self.head.height))

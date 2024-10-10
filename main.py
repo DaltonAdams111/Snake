@@ -9,8 +9,8 @@ from constants import *
 pygame.init()
 
 pygame.display.set_caption(title="Snake")
-screen = pygame.display.set_mode(size=(pygame.display.Info().current_w, pygame.display.Info().current_h), flags=pygame.RESIZABLE | pygame.FULLSCREEN)
-#screen = pygame.display.set_mode(size=(pygame.display.Info().current_w / 2, pygame.display.Info().current_h / 2), flags=pygame.RESIZABLE)
+#screen = pygame.display.set_mode(size=(pygame.display.Info().current_w, pygame.display.Info().current_h), flags=pygame.RESIZABLE | pygame.FULLSCREEN)
+screen = pygame.display.set_mode(size=(pygame.display.Info().current_w / 2, pygame.display.Info().current_h / 2), flags=pygame.RESIZABLE)
 
 clock = pygame.time.Clock()
 delta_time = 0.0
@@ -47,14 +47,16 @@ def main():
 				keys = pygame.key.get_pressed()
 				if keys[pygame.K_ESCAPE]:
 					menu.pauseMenu()
+				if keys[pygame.K_SPACE]:
+					player.grow()
 
 		update(events, delta_time)
 		draw()
 
 		pygame.display.flip()
 
-		delta_time = clock.tick(FPS) / 1000
-		#print(clock.get_fps())
+		delta_time = clock.tick(FPS_CAP) / 1000
+		#FPS = clock.get_fps()
 
 if __name__ == "__main__":
 	main()
