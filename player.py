@@ -1,6 +1,10 @@
 import pygame
 from constants import *
 
+pygame.font.init()
+
+score_font = pygame.font.Font(None, 32)
+
 class Player:
 	def __init__(self, x_positon, y_position, width, height):
 		self.width = width
@@ -22,10 +26,13 @@ class Player:
 
 		return colliding, out_of_bounds
 
-	def draw(self, surface):
+	def draw(self, surface: pygame.surface.Surface):
 		for segment in self.body:
 			pygame.draw.rect(surface, "gray", segment)
 		pygame.draw.rect(surface, "green", self.head)
+
+		score_text = score_font.render(f"Score: {self.score}", True, "white")
+		surface.blit(source=score_text, dest=((surface.get_width() / 2) - (score_text.get_width() / 2), 15))
 
 	def move(self, delta_time):
 		self.move_cooldown -= delta_time
@@ -64,7 +71,10 @@ class Player:
 		self.move_cooldown = self.move_speed
 
 	def grow(self):
+		if self.direction == None:
+			return
 		self.body.append(pygame.Rect(self.head.left - DIRECTIONS[self.direction][0], self.head.top - DIRECTIONS[self.direction][1], self.head.width, self.head.height))
+		self.score += 1
 
 	def is_colliding(self):
 		return 0 < self.head.collidelist(self.body)

@@ -21,7 +21,7 @@ def update(events, delta_time = 0):
 		return
 	is_colliding, is_out_of_bounds = player.update(delta_time)
 	if is_colliding or is_out_of_bounds:
-		menu
+		menu.gameOverMenu(player.score)
 
 def draw():
 	screen.fill(color="grey10")
