@@ -14,6 +14,20 @@ class Player:
 		self.score = 0
 
 	def update(self, delta_time):
+		colliding = self.is_colliding()
+
+		out_of_bounds = self.is_out_of_bounds()
+
+		self.move(delta_time)
+
+		return colliding, out_of_bounds
+
+	def draw(self, surface):
+		for segment in self.body:
+			pygame.draw.rect(surface, "gray", segment)
+		pygame.draw.rect(surface, "green", self.head)
+
+	def move(self, delta_time):
 		self.move_cooldown -= delta_time
 
 		keys = pygame.key.get_pressed()
@@ -49,10 +63,12 @@ class Player:
 
 		self.move_cooldown = self.move_speed
 
-	def draw(self, surface):
-		pygame.draw.rect(surface, "green", self.head)
-		for segment in self.body:
-			pygame.draw.rect(surface, "gray", segment)
-
 	def grow(self):
 		self.body.append(pygame.Rect(self.head.left - DIRECTIONS[self.direction][0], self.head.top - DIRECTIONS[self.direction][1], self.head.width, self.head.height))
+
+	def is_colliding(self):
+		return 0 < self.head.collidelist(self.body)
+	
+	def is_out_of_bounds(self):
+		display = pygame.display.Info()
+		return not (0 <= self.head.centerx <= display.current_w and 0 <= self.head.centery <= display.current_h)

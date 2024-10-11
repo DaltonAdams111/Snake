@@ -17,8 +17,11 @@ delta_time = 0.0
 
 def update(events, delta_time = 0):
 	menu.update(events=events)
-	if menu.current_menu == None:
-		player.update(delta_time)
+	if menu.current_menu != None:
+		return
+	is_colliding, is_out_of_bounds = player.update(delta_time)
+	if is_colliding or is_out_of_bounds:
+		menu
 
 def draw():
 	screen.fill(color="grey10")
