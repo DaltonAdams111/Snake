@@ -19,7 +19,7 @@ def update(events, delta_time = 0):
 	menu.update(events=events)
 	if menu.current_menu != None:
 		return
-	is_colliding, is_out_of_bounds = player.update(delta_time)
+	is_colliding, is_out_of_bounds = player.update(events, delta_time)
 	if is_colliding or is_out_of_bounds:
 		menu.gameOverMenu(player.score)
 
@@ -46,12 +46,14 @@ def main():
 		for event in events:
 			if event.type == pygame.QUIT:
 				running = False
-			if event.type == pygame.KEYDOWN:
-				keys = pygame.key.get_pressed()
-				if keys[pygame.K_ESCAPE]:
-					menu.pauseMenu()
-				if keys[pygame.K_SPACE]:
-					player.grow()
+
+			if event.type != pygame.KEYDOWN:
+				continue
+			
+			if event.key == pygame.K_ESCAPE:
+				menu.pauseMenu()
+			if event.key == pygame.K_SPACE:
+				player.grow()
 
 		update(events, delta_time)
 		draw()

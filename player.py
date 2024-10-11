@@ -17,10 +17,22 @@ class Player:
 		self.move_cooldown = self.move_speed
 		self.score = 0
 
-	def update(self, delta_time):
+	def update(self, events, delta_time):
 		colliding = self.is_colliding()
 
 		out_of_bounds = self.is_out_of_bounds()
+
+		for event in events:
+			if event.type != pygame.KEYDOWN:
+				continue
+			if event.key == pygame.K_UP:
+				self.new_direction = "UP"
+			if event.key == pygame.K_DOWN:
+				self.new_direction = "DOWN"
+			if event.key == pygame.K_RIGHT:
+				self.new_direction = "RIGHT"
+			if event.key == pygame.K_LEFT:
+				self.new_direction = "LEFT"
 
 		self.move(delta_time)
 
@@ -32,21 +44,10 @@ class Player:
 		pygame.draw.rect(surface, "green", self.head)
 
 		score_text = score_font.render(f"Score: {self.score}", True, "white")
-		surface.blit(source=score_text, dest=((surface.get_width() / 2) - (score_text.get_width() / 2), 15))
+		surface.blit(source=score_text, dest=((surface.get_width() / 2) - (score_text.get_width() / 2), 10))
 
 	def move(self, delta_time):
 		self.move_cooldown -= delta_time
-
-		keys = pygame.key.get_pressed()
-
-		if keys[pygame.K_UP]:
-			self.new_direction = "UP"
-		if keys[pygame.K_RIGHT]:
-			self.new_direction = "RIGHT"
-		if keys[pygame.K_DOWN]:
-			self.new_direction = "DOWN"
-		if keys[pygame.K_LEFT]:
-			self.new_direction = "LEFT"
 
 		if self.move_cooldown > 0:
 			return
