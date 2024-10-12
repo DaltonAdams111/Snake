@@ -14,6 +14,7 @@ class Player:
 		self.body = []
 		self.direction = None
 		self.new_direction = None
+		self.move_buffer = []
 		self.move_speed = 0.2
 		self.move_cooldown = self.move_speed
 		self.score = 0
@@ -27,13 +28,15 @@ class Player:
 			if event.type != pygame.KEYDOWN:
 				continue
 			if event.key == pygame.K_UP:
-				self.new_direction = "UP"
+				self.move_buffer.append("UP")
 			if event.key == pygame.K_DOWN:
-				self.new_direction = "DOWN"
+				self.move_buffer.append("DOWN")
 			if event.key == pygame.K_RIGHT:
-				self.new_direction = "RIGHT"
+				self.move_buffer.append("RIGHT")
 			if event.key == pygame.K_LEFT:
-				self.new_direction = "LEFT"
+				self.move_buffer.append("LEFT")
+
+		self.move_buffer = self.move_buffer[-2:]
 
 		self.move(delta_time)
 
@@ -52,6 +55,9 @@ class Player:
 
 		if self.move_cooldown > 0:
 			return
+		
+		if len(self.move_buffer) > 0:
+			self.new_direction = self.move_buffer.pop(0)
 		
 		if self.new_direction == "UP" and not self.direction == "DOWN":
 			self.direction = "UP"
