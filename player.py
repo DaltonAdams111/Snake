@@ -1,4 +1,5 @@
 import pygame
+from fruit import Fruit
 from constants import *
 
 pygame.font.init()
@@ -6,10 +7,10 @@ pygame.font.init()
 score_font = pygame.font.Font(None, 32)
 
 class Player:
-	def __init__(self, x_positon, y_position, width, height):
+	def __init__(self, x_position, y_position, width, height):
 		self.width = width
 		self.height = height
-		self.head = pygame.Rect(x_positon, y_position, width, height)
+		self.head = pygame.Rect(x_position, y_position, width, height)
 		self.body = []
 		self.direction = None
 		self.new_direction = None
@@ -18,7 +19,7 @@ class Player:
 		self.score = 0
 
 	def update(self, events, delta_time):
-		colliding = self.is_colliding()
+		colliding = self.is_colliding_self()
 
 		out_of_bounds = self.is_out_of_bounds()
 
@@ -77,7 +78,12 @@ class Player:
 		self.body.append(pygame.Rect(self.head.left - DIRECTIONS[self.direction][0], self.head.top - DIRECTIONS[self.direction][1], self.head.width, self.head.height))
 		self.score += 1
 
-	def is_colliding(self):
+	def is_colliding_fruit(self, fruit: Fruit):
+		if self.head.colliderect(fruit):
+			self.grow()
+			fruit.move([self.head] + self.body)
+
+	def is_colliding_self(self):
 		return 0 < self.head.collidelist(self.body)
 	
 	def is_out_of_bounds(self):
