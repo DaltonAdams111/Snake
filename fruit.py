@@ -12,6 +12,9 @@ class Fruit:
 		pygame.draw.rect(surface, "red", self.rect)
 
 	def move(self, snake):
+		if len(snake) >= (pygame.display.Info().current_w / 40) * (pygame.display.Info().current_h / 40):
+			return
+		
 		while True:
 			self.rect.left = random.randrange(0, pygame.display.Info().current_w - self.width, self.width)
 			self.rect.top = random.randrange(0, pygame.display.Info().current_h - self.height, self.height)

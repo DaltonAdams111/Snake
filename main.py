@@ -17,7 +17,7 @@ screen = pygame.display.set_mode(size=(pygame.display.Info().current_w, pygame.d
 clock = pygame.time.Clock()
 delta_time = 0.0
 
-def update(events, delta_time = 0.0):
+def update(events, delta_time):
 	menu.update(events=events)
 
 	if menu.current_menu != None:
@@ -27,10 +27,10 @@ def update(events, delta_time = 0.0):
 	if is_colliding_self or is_out_of_bounds:
 		menu.gameOverMenu(player.score)
 
+	player.is_colliding_fruit(fruit)
+
 	if len([player.head] + player.body) >= (screen.get_width() / 40) * (screen.get_height() / 40):
 		menu.gameOverMenu(player.score)
-	else:
-		player.is_colliding_fruit(fruit)
 
 def draw():
 	screen.fill(color="grey10")
