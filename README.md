@@ -1,3 +1,3 @@
-My take on the popular SNAKE game.
+My take on the classic SNAKE game.
 
-A work-in-progress solo developed project.
+A work-in-progress, solo developed project.

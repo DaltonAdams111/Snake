@@ -41,14 +41,14 @@ def draw():
 def startGame():
 	global player
 	global fruit
-	player = Player(x_position=SCREEN_WIDTH / 2, y_position=SCREEN_HEIGHT / 2, width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
-	fruit = Fruit(x_position=random.randrange(0, SCREEN_WIDTH - int(SCREEN_WIDTH / 10), int(SCREEN_WIDTH / 10)), y_position=random.randrange(0, SCREEN_HEIGHT - int(SCREEN_HEIGHT / 10), int(SCREEN_HEIGHT / 10)), width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
+	player = Player()
+	fruit = Fruit()
 	menu.close()
 
 menu = GameMenu(surface=screen, start_function=startGame)
 
-player = Player(x_position=SCREEN_WIDTH / 2, y_position=SCREEN_HEIGHT / 2, width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
-fruit = Fruit(x_position=random.randrange(0, SCREEN_WIDTH - int(SCREEN_WIDTH / 10), int(SCREEN_WIDTH / 10)), y_position=random.randrange(0, SCREEN_HEIGHT - int(SCREEN_HEIGHT / 10), int(SCREEN_HEIGHT / 10)), width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
+player = Player()
+fruit = Fruit()
 
 def main():
 	global delta_time
