@@ -1,3 +1,5 @@
 FPS_CAP = 60
+SCREEN_WIDTH = 720
+SCREEN_HEIGHT = 720
 
-DIRECTIONS = {"UP": (0, -40), "RIGHT": (40, 0), "DOWN": (0, 40), "LEFT": (-40, 0)}
+DIRECTIONS = {"UP": (0, -int(SCREEN_WIDTH / 10)), "RIGHT": (int(SCREEN_WIDTH / 10), 0), "DOWN": (0, int(SCREEN_WIDTH / 10)), "LEFT": (-int(SCREEN_WIDTH / 10), 0)}

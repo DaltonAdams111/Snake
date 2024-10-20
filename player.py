@@ -8,9 +8,9 @@ score_font = pygame.font.Font(None, 32)
 
 class Player:
 	def __init__(self, x_position, y_position, width, height):
-		self.width = width
-		self.height = height
-		self.head = pygame.Rect(x_position, y_position, width, height)
+		self.width = int(width)
+		self.height = int(height)
+		self.head = pygame.Rect(int(x_position), int(y_position), self.width, self.height)
 		self.body = []
 		self.direction = None
 		self.new_direction = None

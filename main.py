@@ -12,7 +12,7 @@ from constants import *
 pygame.init()
 
 pygame.display.set_caption(title="Snake")
-screen = pygame.display.set_mode(size=(pygame.display.Info().current_w, pygame.display.Info().current_h), flags=pygame.FULLSCREEN)
+screen = pygame.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
 
 clock = pygame.time.Clock()
 delta_time = 0.0
@@ -29,7 +29,7 @@ def update(events, delta_time):
 
 	player.is_colliding_fruit(fruit)
 
-	if len([player.head] + player.body) >= (screen.get_width() / 40) * (screen.get_height() / 40):
+	if len([player.head] + player.body) >= (SCREEN_WIDTH / player.width) * (SCREEN_HEIGHT / player.height):
 		menu.gameOverMenu(player.score)
 
 def draw():
@@ -41,14 +41,14 @@ def draw():
 def startGame():
 	global player
 	global fruit
-	player = Player(x_position=screen.get_width() / 2, y_position=screen.get_height() / 2, width=40, height=40)
-	fruit = Fruit(x_position=random.randrange(0, screen.get_width() - 40, 40), y_position=random.randrange(0, screen.get_height() - 40, 40), width=40, height=40)
+	player = Player(x_position=SCREEN_WIDTH / 2, y_position=SCREEN_HEIGHT / 2, width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
+	fruit = Fruit(x_position=random.randrange(0, SCREEN_WIDTH - int(SCREEN_WIDTH / 10), int(SCREEN_WIDTH / 10)), y_position=random.randrange(0, SCREEN_HEIGHT - int(SCREEN_HEIGHT / 10), int(SCREEN_HEIGHT / 10)), width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
 	menu.close()
 
 menu = GameMenu(surface=screen, start_function=startGame)
 
-player = Player(x_position=screen.get_width() / 2, y_position=screen.get_height() / 2, width=40, height=40)
-fruit = Fruit(x_position=random.randrange(0, screen.get_width() - 40, 40), y_position=random.randrange(0, screen.get_height() - 40, 40), width=40, height=40)
+player = Player(x_position=SCREEN_WIDTH / 2, y_position=SCREEN_HEIGHT / 2, width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
+fruit = Fruit(x_position=random.randrange(0, SCREEN_WIDTH - int(SCREEN_WIDTH / 10), int(SCREEN_WIDTH / 10)), y_position=random.randrange(0, SCREEN_HEIGHT - int(SCREEN_HEIGHT / 10), int(SCREEN_HEIGHT / 10)), width=SCREEN_WIDTH / 10, height=SCREEN_HEIGHT / 10)
 
 def main():
 	global delta_time
