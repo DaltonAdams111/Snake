@@ -85,9 +85,14 @@ class Player:
 		self.score += 1
 
 	def is_colliding_fruit(self, fruit: Fruit):
-		if self.head.colliderect(fruit):
-			self.grow()
-			fruit.move([self.head] + self.body)
+		if not self.head.colliderect(fruit):
+			return
+		
+		self.grow()
+		if len(self.body) >= ((SCREEN_WIDTH / self.width) * (SCREEN_HEIGHT / self.height)):
+			return
+
+		fruit.move([self.head] + self.body)
 
 	def is_colliding_self(self):
 		return 0 < self.head.collidelist(self.body)

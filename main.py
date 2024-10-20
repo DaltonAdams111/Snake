@@ -1,9 +1,5 @@
 import pygame
-import pygame_menu
-import pygame_menu.menu
-import pygame_menu.themes
 import sys
-import random
 from menu import GameMenu
 from player import Player
 from fruit import Fruit
@@ -29,7 +25,7 @@ def update(events, delta_time):
 
 	player.is_colliding_fruit(fruit)
 
-	if len([player.head] + player.body) >= (SCREEN_WIDTH / player.width) * (SCREEN_HEIGHT / player.height):
+	if len(player.body) >= (SCREEN_WIDTH / player.width) * (SCREEN_HEIGHT / player.height):
 		menu.gameOverMenu(player.score)
 
 def draw():
@@ -72,7 +68,6 @@ def main():
 		pygame.display.flip()
 
 		delta_time = clock.tick(FPS_CAP) / 1000
-		#FPS = clock.get_fps()
 
 if __name__ == "__main__":
 	main()
