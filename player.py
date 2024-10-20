@@ -7,7 +7,7 @@ pygame.font.init()
 score_font = pygame.font.Font(None, 32)
 
 class Player:
-	def __init__(self):
+	def __init__(self, difficulty):
 		self.width = int(SCREEN_WIDTH / 10)
 		self.height = int(SCREEN_HEIGHT / 10)
 		self.head = pygame.Rect(int(SCREEN_WIDTH / 2), int(SCREEN_HEIGHT / 2), self.width, self.height)
@@ -15,7 +15,7 @@ class Player:
 		self.direction = None
 		self.new_direction = None
 		self.move_buffer = []
-		self.move_speed = 0.2
+		self.move_speed = difficulty
 		self.move_cooldown = self.move_speed
 		self.score = 0
 

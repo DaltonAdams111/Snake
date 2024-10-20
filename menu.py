@@ -30,13 +30,21 @@ class GameMenu:
 		self.alt_theme.widget_font_size = 32
 
 		self.main_menu = pygame_menu.menu.Menu(title="Main Menu", menu_id="main_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.theme)
+		self.options_menu = pygame_menu.menu.Menu(title="Options", menu_id="options_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.theme)
 		self.pause_menu = pygame_menu.menu.Menu(title="Game Paused", menu_id="pause_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.alt_theme)
 		self.game_over_menu = pygame_menu.menu.Menu(title="Game Over", menu_id="pause_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.alt_theme)
+		self.difficulty = DIFFICULTIES[1][1]
 		self.player_score = 0
 
 		self.main_menu.add.button(title="Play", action=start_function)
 		self.main_menu.add.vertical_margin(margin=self.main_menu.get_widgets()[0].get_size()[1])
+		self.main_menu.add.button(title="Options", action=self.optionsMenu)
+		self.main_menu.add.vertical_margin(margin=self.main_menu.get_widgets()[0].get_size()[1])
 		self.main_menu.add.button(title="Exit", action=pygame_menu.events.EXIT)
+
+		self.options_menu.add.selector(title="Difficulty: ", items=DIFFICULTIES, default=1, onchange=self.changeDifficulty)
+		self.options_menu.add.vertical_margin(margin=self.main_menu.get_widgets()[0].get_size()[1])
+		self.options_menu.add.button(title="Main Menu", action=self.mainMenu)
 
 		self.pause_menu.add.button(title="Resume", action=self.close)
 		self.pause_menu.add.vertical_margin(margin=self.pause_menu.get_widgets()[0].get_size()[1])
@@ -50,8 +58,6 @@ class GameMenu:
 		self.game_over_menu.add.button(title="Main Menu", action=self.mainMenu)
 		self.game_over_menu.add.vertical_margin(margin=self.game_over_menu.get_widgets()[0].get_size()[1])
 		self.game_over_menu.add.button(title="Exit", action=pygame_menu.events.EXIT)
-
-		self.menus = [self.main_menu, self.pause_menu, self.game_over_menu]
 
 		self.current_menu = self.main_menu
 
@@ -74,8 +80,16 @@ class GameMenu:
 		self.current_menu = self.main_menu
 		self.current_menu.select_widget(self.current_menu.get_widgets()[0])
 
+	def optionsMenu(self):
+		self.current_menu.unselect_widget()
+		self.current_menu = self.options_menu
+		self.current_menu.select_widget(self.current_menu.get_widgets()[0])
+
+	def changeDifficulty(self, selected, value):
+		self.difficulty = value
+
 	def pauseMenu(self):
-		if self.current_menu == self.main_menu or self.current_menu == self.game_over_menu:
+		if self.current_menu == self.main_menu or self.current_menu == self.game_over_menu or self.current_menu == self.options_menu:
 			return
 		if self.current_menu == self.pause_menu:
 			self.close()

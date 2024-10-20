@@ -37,13 +37,13 @@ def draw():
 def startGame():
 	global player
 	global fruit
-	player = Player()
+	player = Player(menu.difficulty)
 	fruit = Fruit()
 	menu.close()
 
 menu = GameMenu(surface=screen, start_function=startGame)
 
-player = Player()
+player = Player(menu.difficulty)
 fruit = Fruit()
 
 def main():
