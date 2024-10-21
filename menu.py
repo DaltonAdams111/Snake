@@ -5,9 +5,11 @@ import pygame_menu.locals
 import pygame_menu.menu
 import pygame_menu.themes
 import pygame_menu.widgets
+import pygame_menu.widgets.core
 import pygame_menu.widgets.selection
 import pygame_menu.widgets.selection.simple
 import pygame_menu.widgets.widget
+import pygame_menu.widgets.widget.colorinput
 import pygame_menu.widgets.widget.label
 from constants import *
 
@@ -34,6 +36,7 @@ class GameMenu:
 		self.pause_menu = pygame_menu.menu.Menu(title="Game Paused", menu_id="pause_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.alt_theme)
 		self.game_over_menu = pygame_menu.menu.Menu(title="Game Over", menu_id="pause_menu", width=SCREEN_WIDTH, height=SCREEN_HEIGHT, theme=self.alt_theme)
 		self.difficulty = DIFFICULTIES[1][1]
+		self.player_color = COLORS[0][1]
 		self.player_score = 0
 
 		self.main_menu.add.button(title="Play", action=start_function)
@@ -44,12 +47,13 @@ class GameMenu:
 
 		self.options_menu.add.selector(title="Difficulty: ", items=DIFFICULTIES, default=1, onchange=self.changeDifficulty)
 		self.options_menu.add.vertical_margin(margin=self.main_menu.get_widgets()[0].get_size()[1])
+		self.options_menu.add.selector(title="Snake Color", items=COLORS, default=0, onchange=self.changePlayerColor)
+		self.options_menu.add.vertical_margin(margin=self.main_menu.get_widgets()[0].get_size()[1])
 		self.options_menu.add.button(title="Main Menu", action=self.mainMenu)
 
 		self.pause_menu.add.button(title="Resume", action=self.close)
 		self.pause_menu.add.vertical_margin(margin=self.pause_menu.get_widgets()[0].get_size()[1])
 		self.pause_menu.add.button(title="Main Menu", action=self.mainMenu)
-
 
 		self.score_label: pygame_menu.widgets.widget.label.Label = self.game_over_menu.add.label(title=f"Final Score: {self.player_score}")
 		self.game_over_menu.add.vertical_margin(margin=self.game_over_menu.get_widgets()[0].get_size()[1])
@@ -87,6 +91,9 @@ class GameMenu:
 
 	def changeDifficulty(self, selected, value):
 		self.difficulty = value
+
+	def changePlayerColor(self, selected, value):
+		self.player_color = value
 
 	def pauseMenu(self):
 		if self.current_menu == self.main_menu or self.current_menu == self.game_over_menu or self.current_menu == self.options_menu:

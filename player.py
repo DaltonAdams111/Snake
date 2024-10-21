@@ -7,10 +7,11 @@ pygame.font.init()
 score_font = pygame.font.Font(None, 32)
 
 class Player:
-	def __init__(self, difficulty):
+	def __init__(self, difficulty, color):
 		self.width = int(SCREEN_WIDTH / 10)
 		self.height = int(SCREEN_HEIGHT / 10)
 		self.head = pygame.Rect(int(SCREEN_WIDTH / 2), int(SCREEN_HEIGHT / 2), self.width, self.height)
+		self.color = color
 		self.body = []
 		self.direction = None
 		self.new_direction = None
@@ -44,8 +45,8 @@ class Player:
 
 	def draw(self, surface: pygame.surface.Surface):
 		for segment in self.body:
-			pygame.draw.rect(surface, "gray", segment)
-		pygame.draw.rect(surface, "green", self.head)
+			pygame.draw.rect(surface, "darkgray", segment)
+		pygame.draw.rect(surface, self.color, self.head)
 
 		score_text = score_font.render(f"Score: {self.score}", True, "white")
 		surface.blit(source=score_text, dest=((surface.get_width() / 2) - (score_text.get_width() / 2), 10))
