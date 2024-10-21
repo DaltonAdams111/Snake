@@ -1,1 +1,6 @@
 .\__pycache__\
+.\bin\
+.\build\
+.\lib\
+.\lib64\
+.\sdist\
