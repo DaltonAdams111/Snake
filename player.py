@@ -4,7 +4,7 @@ from constants import *
 
 pygame.font.init()
 
-score_font = pygame.font.Font(None, 32)
+font = pygame.font.Font(None, 32)
 
 class Player:
 	def __init__(self, difficulty, color):
@@ -28,13 +28,13 @@ class Player:
 		for event in events:
 			if event.type != pygame.KEYDOWN:
 				continue
-			if event.key == pygame.K_UP:
+			if event.key == pygame.K_UP or event.key == pygame.K_w:
 				self.move_buffer.append("UP")
-			if event.key == pygame.K_DOWN:
+			if event.key == pygame.K_DOWN or event.key == pygame.K_s:
 				self.move_buffer.append("DOWN")
-			if event.key == pygame.K_RIGHT:
+			if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
 				self.move_buffer.append("RIGHT")
-			if event.key == pygame.K_LEFT:
+			if event.key == pygame.K_LEFT or event.key == pygame.K_a:
 				self.move_buffer.append("LEFT")
 
 		self.move_buffer = self.move_buffer[-2:]
@@ -44,12 +44,16 @@ class Player:
 		return colliding, out_of_bounds
 
 	def draw(self, surface: pygame.surface.Surface):
+		if self.direction == None:
+			directions_text = font.render("Use WASD or Arrow Keys to move", True, "white", "grey10")
+			surface.blit(source=directions_text, dest=((SCREEN_WIDTH / 2) - (directions_text.get_width() / 2), 144))
+
 		for segment in self.body:
 			pygame.draw.rect(surface, "darkgray", segment)
 		pygame.draw.rect(surface, self.color, self.head)
 
-		score_text = score_font.render(f"Score: {self.score}", True, "white")
-		surface.blit(source=score_text, dest=((surface.get_width() / 2) - (score_text.get_width() / 2), 10))
+		score_text = font.render(f"Score: {self.score}", True, "white")
+		surface.blit(source=score_text, dest=((SCREEN_WIDTH / 2) - (score_text.get_width() / 2), 10))
 
 	def move(self, delta_time):
 		self.move_cooldown -= delta_time
